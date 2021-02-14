@@ -1,0 +1,130 @@
+
+<div class="t-login-form">
+  <form [formGroup]="blogForm">
+    <mat-card class="t-card">
+      <mat-card-header>
+        <mat-card-title>Blog Post</mat-card-title>
+        <mat-card-subtitle>Blog Post Information</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="t-full-width">
+              <mat-label>
+                Title
+                <span class="required">*</span>
+              </mat-label>
+              <input matInput formControlName="title" placeholder="Enter Post Title" />
+              <mat-error *ngIf="blogForm.controls['title'].hasError('required')">
+                Title is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="blogForm.controls['title'].hasError('maxlength')">
+                title max length is <strong>20</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="t-full-width">
+              <mat-label>
+                Published From
+                <span class="required">*</span>
+              </mat-label>
+              <input matInput [matDatepicker]="publishDatePicker" [max]="today" formControlName="publishDate"
+                placeholder="publish From Date" name="publishDate" />
+              <mat-datepicker-toggle matSuffix [for]="publishDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #publishDatePicker></mat-datepicker>
+              <mat-error *ngIf="blogForm.controls['publishDate'].hasError('required')">
+                publish From is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-label class="mt-1">
+              Active
+              <span class="required">*</span>
+            </mat-label>
+            <br />
+            <mat-radio-group aria-label="Select Published" formControlName="isPublish">
+              <mat-radio-button *ngFor="let g of publishs" [value]="g.value"> {{g.text}} </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="t-full-width">
+              <mat-label>
+                Author
+                <span class="required">*</span>
+              </mat-label>
+              <input matInput formControlName="author" placeholder="Enter Author Name" />
+              <mat-error *ngIf="blogForm.controls['author'].hasError('required')">
+                author name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="t-full-width">
+              <mat-label>
+                Email
+                <span class="required">*</span>
+              </mat-label>
+              <input matInput formControlName="email" placeholder="Enter Email" />
+              <mat-error *ngIf="blogForm.controls['email'].hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="blogForm.controls['email'].hasError('email') && !blogForm.controls['email'].hasError('required')">
+                Email is not valid
+              </mat-error>
+              <mat-error *ngIf="blogForm.controls['email'].hasError('maxlength')">
+                Email max length is <strong>50</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-12">
+
+              <editor formControlName="postText" [init]="{
+                height: 500,
+                menubar: false,
+                plugins: [
+                  'advlist autolink lists link image charmap print preview anchor',
+                  'searchreplace visualblocks code fullscreen',
+                  'insertdatetime media table paste code help wordcount'
+                ],
+                toolbar:
+                  'undo redo | formatselect | bold italic backcolor | \
+                  alignleft aligncenter alignright alignjustify | \
+                  bullist numlist outdent indent | removeformat | help'
+              }"></editor>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-checkbox formControlName="isTermsPolicy">Accept terms & policy</mat-checkbox>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="row">
+          <div class="col-md-12">
+            <button class="btn btn-secondary" mat-raised-button type="reset">Reset</button>
+            <button mat-raised-button color="primary" (click)="save()" class="btn btn-primary">
+              {{ (blogForm.controls['id'].value == null) ? 'Add' : 'Update' }}
+            </button>
+          </div>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
+
+   <a href="https://www.tiny.cloud/docs/integrations/angular/#tinymceangularintegrationquickstartguide">tutorial</a>
